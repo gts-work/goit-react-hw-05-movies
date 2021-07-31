@@ -1,8 +1,10 @@
 import React, { PureComponent } from "react";
+import { Link } from "react-router-dom";
 
 import MoviesApi from "../services/movieApi";
-import data from "../services/settings";
+import settings from "../services/settings";
 import styles from "./Views.module.css";
+import { getFullUrl } from "../services/functions";
 
 class HomeView extends PureComponent {
   state = {
@@ -41,23 +43,23 @@ class HomeView extends PureComponent {
       .finally(console.log("API fetchMovies ~ FINALY: "));
   };
 
-  getFullUrl = (url) => {
-    return `${data.MOVIES_URL}${url}`;
-  };
-
   render() {
+    const { url, path } = this.props.match;
+    const { movies } = this.state;
     return (
       <>
         <h1>Tranding today</h1>
         <ul>
           {this.state.movies.map(({ id, title, poster_path }) => (
             <li key={id}>
-              <img
-                className={styles.poster}
-                src={this.getFullUrl(poster_path)}
-                alt={title}
-              />
-              {title}
+              <Link to={`${url}movies/${id}`}>
+                <img
+                  className={styles.poster}
+                  src={getFullUrl(poster_path)}
+                  alt={title}
+                />
+                {title}
+              </Link>
             </li>
           ))}
         </ul>
@@ -67,31 +69,3 @@ class HomeView extends PureComponent {
 }
 
 export default HomeView;
-
-// const HomeView = () => {
-//     MoviesApi.fetchMovies()
-//         .then((data) => {
-//             console.log("API fetchMovies ~ data: ", data);
-//             console.log("API fetchMovies ~ results: ", data.results);
-
-//             // const imagesQuery = data.hits;
-//             // const totalImages = data.total;
-
-//             // setImages([...images, ...imagesQuery]);
-//             // setTotalImages(totalImages);
-//             // setCurrentPage(currentPage + 1);
-//             // setError("");
-
-//             // if (isLoadMore) {
-//             //     window.scrollTo({
-//             //         top: document.documentElement.scrollHeight,
-//             //         behavior: "smooth",
-//             //     });
-//             // }
-//         })
-//         .catch((error) => console.log("API fetchMovies ~ ERROR: ", error))
-//         .finally(console.log("API fetchMovies ~ FINALY: "));
-//     return <h1>Это домашняя страница</h1>;
-// };
-
-// export default HomeView;

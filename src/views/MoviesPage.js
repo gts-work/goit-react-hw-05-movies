@@ -1,7 +1,21 @@
-import React from "react";
+import React, { PureComponent } from "react";
+import { render } from "react-dom";
+import { Route } from "react-router";
 
-const Movies = () => {
-  return <h1>Movie Page</h1>;
-};
+// import MovieDetailsPage from "./MovieDetailsPage";
+// import Cast from "./Cast";
+// import Reviews from "./Reviews";
 
-export default Movies;
+export default class Movies extends PureComponent {
+  state = {};
+
+  render() {
+    const { url, path } = this.props.match;
+
+    return (
+      <>
+        <h1>Movie Page</h1>
+      </>
+    );
+  }
+}
