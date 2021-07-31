@@ -27,21 +27,6 @@ export default class MovieDetailsPage extends PureComponent {
         console.log("MovieDetailsPage fetchMovies ~ data: ", data);
 
         this.setState({ movie: data });
-
-        // const imagesQuery = data.hits;
-        // const totalImages = data.total;
-
-        // setImages([...images, ...imagesQuery]);
-        // setTotalImages(totalImages);
-        // setCurrentPage(currentPage + 1);
-        // setError("");
-
-        // if (isLoadMore) {
-        //     window.scrollTo({
-        //         top: document.documentElement.scrollHeight,
-        //         behavior: "smooth",
-        //     });
-        // }
       })
       .catch((error) =>
         console.log("MovieDetailsPage fetchMovies ~ ERROR: ", error)
@@ -54,26 +39,10 @@ export default class MovieDetailsPage extends PureComponent {
 
   render() {
     const { url, path, params } = this.props.match;
-    const { movieId } = params.movieId;
     const { movie } = this.state;
-    // const {
-    //     title,
-    //     overview,
-    //     review,
-    //     poster_path,
-    //     release_date,
-    //     vote_average,
-    //     genres,
-    // } = this.state.movie;
 
-    console.log("1 MovieDetailsPage ~ render ~ movie: ", movie);
-    console.log("1 MovieDetailsPage ~ render ~ genres: ", movie.genres);
-
-    if (movie.genres) {
-      const test = movie.genres.map((genre) => {
-        console.log("GENRE: ", genre.name);
-      });
-    }
+    console.log("1 MovieDetailsPage ~ render ~ movieId: ", params.movieId);
+    // console.log("1 MovieDetailsPage ~ render ~ genres: ", movie.genres);
 
     return (
       <>
@@ -101,6 +70,7 @@ export default class MovieDetailsPage extends PureComponent {
         )}
 
         <hr />
+
         <h3>Additional information</h3>
         <NavLink to={`${url}/cast`}>
           <p>Cast</p>
@@ -108,26 +78,17 @@ export default class MovieDetailsPage extends PureComponent {
         <NavLink to={`${url}/reviews`}>
           <p>Reviews</p>
         </NavLink>
+
         <Route
           path={`${path}/cast`}
-          render={(props) => {
-            // const bookId = Number(props.match.params.authorId);
-            // const author = this.state.authors.find(
-            //     ({ id }) => id === bookId
-            // );
-
-            return this.state.movie && <Cast {...props} movieId={movieId} />;
+          render={() => {
+            return movie && <Cast movieId={params.movieId} />;
           }}
         />
         <Route
           path={`${path}/reviews`}
-          render={(props) => {
-            // const bookId = Number(props.match.params.authorId);
-            // const author = this.state.authors.find(
-            //     ({ id }) => id === bookId
-            // );
-
-            return this.state.movie && <Reviews {...props} movieId={movieId} />;
+          render={() => {
+            return movie && <Reviews movieId={params.movieId} />;
           }}
         />
       </>
