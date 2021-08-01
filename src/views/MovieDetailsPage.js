@@ -46,6 +46,10 @@ export default class MovieDetailsPage extends PureComponent {
 
     return (
       <>
+        <NavLink to="/">
+          <button className={styles.go_back_btn}>Go back</button>
+        </NavLink>
+
         <img
           className={styles.big_poster}
           src={getFullUrl(movie.poster_path)}

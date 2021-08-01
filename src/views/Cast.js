@@ -4,6 +4,7 @@ import settings from "../services/settings";
 import MoviesApi from "../services/movieApi";
 import { getFullUrl } from "../services/functions";
 import styles from "./Views.module.css";
+import anonim from "../images/anonim.jpg";
 
 export default class Cast extends PureComponent {
   state = {
@@ -46,10 +47,16 @@ export default class Cast extends PureComponent {
             credits.map((credit) => {
               return (
                 <li>
-                  {credit.profile_path && (
+                  {credit.profile_path ? (
                     <img
-                      className={styles.poster}
+                      className={styles.poster_cast}
                       src={getFullUrl(credit.profile_path)}
+                      alt={credit.name}
+                    />
+                  ) : (
+                    <img
+                      className={styles.poster_cast}
+                      src={anonim}
                       alt={credit.name}
                     />
                   )}

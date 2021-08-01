@@ -5,6 +5,7 @@ import MoviesApi from "../services/movieApi";
 import settings from "../services/settings";
 import styles from "./Views.module.css";
 import { getFullUrl } from "../services/functions";
+import MoviesList from "../components/MoviesList";
 
 class HomeView extends PureComponent {
   state = {
@@ -19,50 +20,25 @@ class HomeView extends PureComponent {
   fetchTrendingMovies = () => {
     MoviesApi.fetchMovies()
       .then((data) => {
-        console.log("API fetchMovies ~ data: ", data);
+        // console.log("API fetchMovies ~ data: ", data);
         console.log("API fetchMovies ~ results: ", data.results);
 
         this.setState({ movies: data.results });
-
-        // const imagesQuery = data.hits;
-        // const totalImages = data.total;
-
-        // setImages([...images, ...imagesQuery]);
-        // setTotalImages(totalImages);
-        // setCurrentPage(currentPage + 1);
-        // setError("");
-
-        // if (isLoadMore) {
-        //     window.scrollTo({
-        //         top: document.documentElement.scrollHeight,
-        //         behavior: "smooth",
-        //     });
-        // }
       })
       .catch((error) => console.log("API fetchMovies ~ ERROR: ", error))
       .finally(console.log("API fetchMovies ~ FINALY: "));
   };
 
   render() {
-    const { url, path } = this.props.match;
+    const { url } = this.props.match;
     const { movies } = this.state;
+    console.log("HomeView ~ render ~ url: ", url);
+    console.log("HomeView ~ render ~ movies: ", movies);
+
     return (
       <>
         <h1>Tranding today</h1>
-        <ul>
-          {this.state.movies.map(({ id, title, poster_path }) => (
-            <li key={id}>
-              <Link to={`${url}movies/${id}`}>
-                <img
-                  className={styles.poster}
-                  src={getFullUrl(poster_path)}
-                  alt={title}
-                />
-                {title}
-              </Link>
-            </li>
-          ))}
-        </ul>
+        {movies.length > 0 && <MoviesList movies={movies} url={url} />}
       </>
     );
   }

@@ -7,6 +7,7 @@ const data = {
   DATA_QUERY: {
     getTrending: "trending/movie/day",
     getMovieId: "movie/",
+    searchMovie: "search/movie",
   },
 };
 
@@ -14,3 +15,4 @@ export default data;
 
 // /movie/{movie_id}/credits
 // /movie/{movie_id}/reviews
+// /search/movie
