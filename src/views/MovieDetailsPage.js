@@ -79,6 +79,8 @@ export default class MovieDetailsPage extends PureComponent {
           <p>Reviews</p>
         </NavLink>
 
+        <hr />
+
         <Route
           path={`${path}/cast`}
           render={() => {
