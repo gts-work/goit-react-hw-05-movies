@@ -43,7 +43,7 @@ a {
 .container {
   display: block;
 
-  min-width: 860px;
+  min-width: 720px;
 
   background-color: #fff;
 }
