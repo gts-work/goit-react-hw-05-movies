@@ -1,8 +1,5 @@
-.moviesList {
-  display: flex;
-
-  justify-content: space-between;
-  flex-wrap: wrap;
+.title {
+  padding-left: 20px;
 }
 
 .poster {
@@ -11,96 +8,189 @@
 
 .big_poster {
   display: inline-block;
+
   width: 200px;
+
+  margin-right: 20px;
+  margin-left: 20px;
+
+  vertical-align: text-top;
 }
 
 .poster_cast {
   width: 50px;
 }
 
+.view_detail_box {
+  /* padding-left: 20px; */
+  display: flex;
+  flex-direction: column;
+}
+
+.view_detail_info {
+  display: flex;
+
+  padding-bottom: 20px;
+
+  border-bottom: 2px solid gray;
+}
+
+.view_detail_title,
+.view_detail_score {
+  /* display: inline-block; */
+  /* margin-left: 210px; */
+}
+
+.view_detail_genres {
+  display: flex;
+
+  margin: -10px;
+}
+
+.view_detail_genre_item {
+  margin: 10px;
+}
+
+.view_detail_add_block {
+  border-bottom: 2px solid gray;
+}
+
+.view_detail_add_title,
+.view_detail_add_link {
+  display: block;
+
+  margin-left: 20px;
+  margin-bottom: 20px;
+}
+
 .go_back_btn {
   display: block;
 
+  padding: 5px 8px;
   margin-top: 10px;
   margin-bottom: 10px;
+  margin-left: 20px;
+
+  background-color: cadetblue;
+
+  border: none;
+  color: white;
+
+  font-size: 12px;
+  font-weight: 700px;
+  text-align: center;
+  text-decoration: none;
+
+  cursor: pointer;
+}
+
+.search_btn {
+  margin-top: 32px;
+  background-color: cadetblue;
+  border: none;
+  color: white;
+  padding: 10px 20px;
+  margin-left: 15px;
+}
+
+.go_back_btn_larr {
+  vertical-align: 2px;
+}
+
+.go_back_btn:hover,
+.search_btn:hover {
+  background-color: #008cba;
 }
 
 /* Search form */
-.searchbar {
-  top: 0;
-  left: 0;
-  position: sticky;
-  z-index: 1100;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 64px;
-  padding-right: 24px;
-  padding-left: 24px;
-  padding-top: 12px;
-  padding-bottom: 12px;
-  color: #fff;
-  background-color: #3f51b5;
-  box-shadow: 0px 2px 4px -1px rgba(0, 0, 0, 0.2),
-    0px 4px 5px 0px rgba(0, 0, 0, 0.14), 0px 1px 10px 0px rgba(0, 0, 0, 0.12);
-}
+/* .searchbar {
+    top: 0;
+    left: 0;
+    position: sticky;
+    z-index: 1100;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 64px;
+    padding-right: 24px;
+    padding-left: 24px;
+    padding-top: 12px;
+    padding-bottom: 12px;
+    color: #fff;
+    background-color: #3f51b5;
+    box-shadow: 0px 2px 4px -1px rgba(0, 0, 0, 0.2),
+        0px 4px 5px 0px rgba(0, 0, 0, 0.14),
+        0px 1px 10px 0px rgba(0, 0, 0, 0.12);
+} */
 
 /*
  * Стили компонента SearchForm
  */
 .search_form {
   display: flex;
+
+  padding-left: 20px;
+  padding-right: 20px;
+
   align-items: center;
+
   width: 100%;
   max-width: 600px;
+
   background-color: #fff;
   border-radius: 3px;
+
   overflow: hidden;
-}
-
-.search_form_button {
-  display: inline-block;
-  width: 48px;
-  height: 48px;
-  border: 0;
-  background-image: url("https://image.flaticon.com/icons/svg/149/149852.svg");
-  background-size: 40%;
-  background-repeat: no-repeat;
-  background-position: center;
-  opacity: 0.6;
-  transition: opacity 250ms cubic-bezier(0.4, 0, 0.2, 1);
-  cursor: pointer;
-  outline: none;
-}
-
-.search_form_button:hover {
-  opacity: 1;
-}
-
-.search_form_button_label {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  white-space: nowrap;
-  clip-path: inset(50%);
-  border: 0;
 }
 
 .search_form_input {
   display: inline-block;
+
   width: 100%;
+  height: 38px;
+
+  margin-top: 30px;
+
   font: inherit;
   font-size: 20px;
+
   border: 1px solid grey;
   outline: none;
-  padding-left: 4px;
-  padding-right: 4px;
 }
 
 .search_form_input::placeholder {
   font: inherit;
   font-size: 18px;
+}
+
+.cast_block,
+.reviews_block {
+  margin-top: 20px;
+  margin-left: 20px;
+}
+
+.cast_list {
+  display: grid;
+  max-width: calc(200vw - 48px);
+  grid-template-columns: repeat(auto-fill, minmax(100px, 3fr));
+  grid-gap: 36px;
+  margin-top: 0;
+  margin-bottom: 0;
+  padding: 0;
+  list-style: none;
+  margin-left: 20px;
+  margin-right: 20px;
+}
+
+.reviews_list {
+  display: grid;
+  max-width: calc(400vw - 120px);
+  grid-template-columns: repeat(auto-fill, minmax(350px, 32fr));
+  grid-gap: 65px;
+  margin-top: 0;
+  margin-bottom: 0;
+  padding: 0;
+  list-style: none;
+  margin-left: 20px;
+  margin-right: 20px;
 }

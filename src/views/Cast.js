@@ -40,34 +40,34 @@ export default class Cast extends PureComponent {
 
     return (
       <>
-        <h1>Cast page {this.props.movieId}</h1>
-
-        <ul>
-          {credits.length > 0 ? (
-            credits.map((credit) => {
-              return (
-                <li>
-                  {credit.profile_path ? (
-                    <img
-                      className={styles.poster_cast}
-                      src={getFullUrl(credit.profile_path)}
-                      alt={credit.name}
-                    />
-                  ) : (
-                    <img
-                      className={styles.poster_cast}
-                      src={anonim}
-                      alt={credit.name}
-                    />
-                  )}
-                  <h4>Author: {credit.name}</h4>
-                </li>
-              );
-            })
-          ) : (
-            <p>We don't have any for this movie cast</p>
-          )}
-        </ul>
+        <div className={styles.cast_block}>
+          <ul className={styles.cast_list}>
+            {credits.length > 0 ? (
+              credits.map((credit) => {
+                return (
+                  <li>
+                    {credit.profile_path ? (
+                      <img
+                        className={styles.poster_cast}
+                        src={getFullUrl(credit.profile_path)}
+                        alt={credit.name}
+                      />
+                    ) : (
+                      <img
+                        className={styles.poster_cast}
+                        src={anonim}
+                        alt={credit.name}
+                      />
+                    )}
+                    <h4>Author: {credit.name}</h4>
+                  </li>
+                );
+              })
+            ) : (
+              <p>We don't have any for this movie cast</p>
+            )}
+          </ul>
+        </div>
       </>
     );
   }

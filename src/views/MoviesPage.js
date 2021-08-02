@@ -60,8 +60,6 @@ export default class Movies extends PureComponent {
 
     return (
       <>
-        <h1>Movie Page</h1>
-
         <form className={styles.search_form} onSubmit={this.handleSubmit}>
           <input
             className={styles.search_form_input}
@@ -73,8 +71,8 @@ export default class Movies extends PureComponent {
             placeholder="Search movies"
           />
 
-          <button type="submit" className={styles.search_form_button}>
-            <span className={styles.search_form_button_label}>Search</span>
+          <button className={styles.search_btn} type="submit">
+            Search
           </button>
         </form>
 

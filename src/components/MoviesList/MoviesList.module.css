@@ -1,0 +1,23 @@
+/* .moviesList {
+    display: flex;
+
+    padding-left: 20px;
+    padding-right: 20px;
+    margin: -20px;
+
+    justify-content: space-between;
+    flex-wrap: wrap;
+} */
+
+.moviesList {
+  display: grid;
+  max-width: calc(200vw - 48px);
+  grid-template-columns: repeat(auto-fill, minmax(100px, 3fr));
+  grid-gap: 36px;
+  margin-top: 0;
+  margin-bottom: 0;
+  padding: 0;
+  list-style: none;
+  margin-left: 20px;
+  margin-right: 20px;
+}

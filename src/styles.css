@@ -35,3 +35,15 @@ ul {
   padding-left: 0;
   padding-right: 0;
 }
+
+a {
+  text-decoration: none;
+}
+
+.container {
+  display: block;
+
+  min-width: 860px;
+
+  background-color: #fff;
+}

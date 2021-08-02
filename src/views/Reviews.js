@@ -53,22 +53,22 @@ export default class Reviews extends PureComponent {
 
     return (
       <>
-        <h1>Reviews page {this.props.movieId}</h1>
-
-        <ul>
-          {reviews.length > 0 ? (
-            reviews.map((review) => {
-              return (
-                <li>
-                  <h4>Author: {review.author}</h4>
-                  <p>{review.content}</p>
-                </li>
-              );
-            })
-          ) : (
-            <p>We don't have any for this movie reviews</p>
-          )}
-        </ul>
+        <div className={styles.reviews_block}>
+          <ul className={styles.reviews_list}>
+            {reviews.length > 0 ? (
+              reviews.map((review) => {
+                return (
+                  <li>
+                    <h4>Author: {review.author}</h4>
+                    <p>{review.content}</p>
+                  </li>
+                );
+              })
+            ) : (
+              <p>We don't have any for this movie reviews</p>
+            )}
+          </ul>
+        </div>
       </>
     );
   }

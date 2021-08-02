@@ -5,7 +5,7 @@ import styles from "./MoviesList.module.css";
 
 const MoviesList = ({ movies, url }) => {
   return (
-    <ul>
+    <ul className={styles.moviesList}>
       {movies.map(({ id, title, poster_path }) => (
         <MovieItem id={id} url={url} title={title} poster_path={poster_path} />
       ))}

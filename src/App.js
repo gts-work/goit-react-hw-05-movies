@@ -1,17 +1,14 @@
 import React from "react";
-import { Route, NavLink, Switch } from "react-router-dom";
+import { Route, Switch } from "react-router-dom";
 
 import Navigation from "./components/Navigation";
 import HomeView from "./views/HomeView";
 import MoviesPage from "./views/MoviesPage";
-
 import MovieDetailsPage from "./views/MovieDetailsPage";
-import Cast from "./views/Cast";
-import Reviews from "./views/Reviews";
 
 function App() {
   return (
-    <>
+    <div className="container">
       <Navigation />
 
       <Switch>
@@ -19,7 +16,7 @@ function App() {
         <Route exact path="/movies" component={MoviesPage} />
         <Route path="/movies/:movieId" component={MovieDetailsPage} />
       </Switch>
-    </>
+    </div>
   );
 }
 

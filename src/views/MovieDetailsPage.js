@@ -14,7 +14,6 @@ export default class MovieDetailsPage extends PureComponent {
   };
 
   componentDidMount() {
-    // this.setState({ movies:  });
     this.fetchGetMovieId();
   }
 
@@ -40,63 +39,83 @@ export default class MovieDetailsPage extends PureComponent {
   render() {
     const { url, path, params } = this.props.match;
     const { movie } = this.state;
+    const movieDate = new Date(movie.release_date);
+    const movieYear = movieDate.getFullYear();
 
-    console.log("1 MovieDetailsPage ~ render ~ movieId: ", params.movieId);
+    // console.log("1 MovieDetailsPage ~ render ~ movieId: ", params.movieId);
     // console.log("1 MovieDetailsPage ~ render ~ genres: ", movie.genres);
 
     return (
       <>
-        <NavLink to="/">
-          <button className={styles.go_back_btn}>Go back</button>
-        </NavLink>
+        <Link to="/">
+          <button className={styles.go_back_btn} type="button">
+            <span className={styles.go_back_btn_larr}>&larr;</span> Go back
+          </button>
+        </Link>
 
-        <img
-          className={styles.big_poster}
-          src={getFullUrl(movie.poster_path)}
-          alt={movie.title}
-        />
-        <h3>
-          {movie.title} ({movie.release_date})
-        </h3>
+        <div className={styles.view_detail_box}>
+          <div className={styles.view_detail_info}>
+            <img
+              className={styles.big_poster}
+              src={getFullUrl(movie.poster_path)}
+              alt={movie.title}
+            />
 
-        <p>User Score: {movie.vote_average * 10}</p>
+            <div>
+              <h3 className={styles.view_detail_title}>
+                {movie.title} ({movieYear})
+              </h3>
 
-        <p>Overview</p>
-        <p>{movie.overview}</p>
+              <p className={styles.view_detail_score}>
+                User Score: {movie.vote_average * 10}
+              </p>
 
-        <p>Genres</p>
-        {movie.genres && (
-          <ul>
-            {movie.genres.map((genre) => {
-              return <li>{genre.name}</li>;
-            })}
-          </ul>
-        )}
+              <h3>Overview</h3>
+              <p>{movie.overview}</p>
 
-        <hr />
+              <h3>Genres</h3>
+              {movie.genres && (
+                <ul className={styles.view_detail_genres}>
+                  {movie.genres.map((genre) => {
+                    return (
+                      <li className={styles.view_detail_genre_item}>
+                        {genre.name}
+                      </li>
+                    );
+                  })}
+                </ul>
+              )}
+            </div>
+          </div>
 
-        <h3>Additional information</h3>
-        <NavLink to={`${url}/cast`}>
-          <p>Cast</p>
-        </NavLink>
-        <NavLink to={`${url}/reviews`}>
-          <p>Reviews</p>
-        </NavLink>
+          <div className={styles.view_detail_add_block}>
+            <h3 className={styles.view_detail_add_title}>
+              Additional information
+            </h3>
+            <NavLink to={`${url}/cast`} className={styles.view_detail_add_link}>
+              Cast
+            </NavLink>
+            <NavLink
+              to={`${url}/reviews`}
+              className={styles.view_detail_add_link}
+            >
+              Reviews
+            </NavLink>
+          </div>
 
-        <hr />
-
-        <Route
-          path={`${path}/cast`}
-          render={() => {
-            return movie && <Cast movieId={params.movieId} />;
-          }}
-        />
-        <Route
-          path={`${path}/reviews`}
-          render={() => {
-            return movie && <Reviews movieId={params.movieId} />;
-          }}
-        />
+          <Route
+            path={`${path}/cast`}
+            render={() => {
+              return movie && <Cast movieId={params.movieId} />;
+            }}
+          />
+          <Route
+            path={`${path}/reviews`}
+            render={() => {
+              return movie && <Reviews movieId={params.movieId} />;
+            }}
+          />
+        </div>
       </>
     );
   }

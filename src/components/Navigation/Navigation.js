@@ -9,21 +9,35 @@ const NAV_TITLES = [
 
 export default function Navigation() {
   return (
-    <ul>
-      {NAV_TITLES.map((nav) => {
-        return (
-          <li key={nav.id}>
-            <NavLink
-              exact
-              to={nav.url}
-              className={styles.nav_link}
-              activeClassName={styles.nav_link_active}
-            >
-              {nav.title}
-            </NavLink>
-          </li>
-        );
-      })}
-    </ul>
+    <nav>
+      <ul className={styles.nav_container}>
+        {NAV_TITLES.map((nav) => {
+          const { id, url, title } = nav;
+
+          return id === "t1" ? (
+            <li key={id}>
+              <NavLink
+                exact
+                to={url}
+                className={styles.nav_link}
+                activeClassName={styles.nav_link_active}
+              >
+                {title}
+              </NavLink>
+            </li>
+          ) : (
+            <li key={id}>
+              <NavLink
+                to={url}
+                className={styles.nav_link}
+                activeClassName={styles.nav_link_active}
+              >
+                {title}
+              </NavLink>
+            </li>
+          );
+        })}
+      </ul>
+    </nav>
   );
 }

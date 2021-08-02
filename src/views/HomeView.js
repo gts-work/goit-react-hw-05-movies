@@ -32,12 +32,12 @@ class HomeView extends PureComponent {
   render() {
     const { url } = this.props.match;
     const { movies } = this.state;
-    console.log("HomeView ~ render ~ url: ", url);
-    console.log("HomeView ~ render ~ movies: ", movies);
+    // console.log("HomeView ~ render ~ url: ", url);
+    // console.log("HomeView ~ render ~ movies: ", movies);
 
     return (
       <>
-        <h1>Tranding today</h1>
+        <h1 className={styles.title}>Trending today</h1>
         {movies.length > 0 && <MoviesList movies={movies} url={url} />}
       </>
     );
