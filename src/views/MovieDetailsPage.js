@@ -1,7 +1,6 @@
 import React, { PureComponent } from "react";
 import { Route, NavLink, Link, Switch, Redirect } from "react-router-dom";
 
-import HomeView from "./HomeView";
 import Reviews from "./Reviews";
 import Cast from "./Cast";
 import MoviesApi from "../services/movieApi";
@@ -29,8 +28,12 @@ export default class MovieDetailsPage extends PureComponent {
       .then((data) => {
         console.log("MovieDetailsPage fetchMovies ~ data: ", data);
 
-        this.setState({ movie: data });
-        this.setState({ error: "" });
+        if ("success" in data) {
+          this.setState({ error: data.status_message });
+        } else {
+          this.setState({ movie: data });
+          this.setState({ error: "" });
+        }
       })
       .catch((error) => {
         console.log("MovieDetailsPage fetchMovies ~ ERROR: ", error);
