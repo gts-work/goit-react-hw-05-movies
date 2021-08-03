@@ -1,148 +1,168 @@
-import React, { PureComponent } from "react";
-import { Route, NavLink, Link, Switch, Redirect } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import {
+  Route,
+  NavLink,
+  Switch,
+  Redirect,
+  useLocation,
+  useParams,
+  useHistory,
+} from "react-router-dom";
 
 import Reviews from "./Reviews";
 import Cast from "./Cast";
 import MoviesApi from "../services/movieApi";
-import settings from "../services/settings";
+import { API_DATA } from "../services/settings";
 import styles from "./Views.module.css";
 import { getFullUrl } from "../services/functions";
 
-export default class MovieDetailsPage extends PureComponent {
-  state = {
-    movie: {},
-    error: "",
-  };
+// export default function MovieDetailsPage() {
+//     const location = useLocation();
+//     console.log("MovieDetailsPage ~ render ~ location:", location);
 
-  componentDidMount() {
-    this.fetchGetMovieId();
-  }
+//     const { movieId } = useParams();
+//     console.log("MovieDetailsPage ~ movieId: ", movieId);
 
-  fetchGetMovieId = () => {
-    const movieId = this.props.match.params.movieId;
-    const apiQuery = `${settings.DATA_QUERY.getMovieId}/${movieId}`;
+//     const history = useHistory();
+//     console.log("MovieDetailsPage ~ history: ", history);
+// }
 
-    console.log("MovieDetailsPage ~ movieId: ", movieId);
+export default function MovieDetailsPage(props) {
+  const [movie, setMovie] = useState({});
+  const [error, setError] = useState("");
+  const { movieId } = useParams();
+  const location = useLocation();
+  const history = useHistory();
+  const { path, url } = props.match;
+  const [from, setFrom] = useState(location?.state?.from ?? "/");
+
+  // console.log("MovieDetailsPage ~ props.url: ", url);
+  // console.log("MovieDetailsPage ~ props.path: ", path);
+  // console.log("MovieDetailsPage movieId: ", movieId);
+  console.log("MovieDetailsPage location:", location);
+  // console.log("MovieDetailsPage history:", history);
+
+  useEffect(() => {
+    fetchGetMovieId();
+  }, []);
+
+  const fetchGetMovieId = () => {
+    const apiQuery = `${API_DATA.DATA_QUERY.getMovieId}/${movieId}`;
 
     MoviesApi.fetchMovies(apiQuery)
       .then((data) => {
-        console.log("MovieDetailsPage fetchMovies ~ data: ", data);
+        // console.log("MovieDetailsPage fetchMovies ~ data: ", data);
 
         if ("success" in data) {
-          this.setState({ error: data.status_message });
+          setError(data.status_message);
         } else {
-          this.setState({ movie: data });
-          this.setState({ error: "" });
+          setMovie(data);
+          setError("");
         }
       })
       .catch((error) => {
-        console.log("MovieDetailsPage fetchMovies ~ ERROR: ", error);
-        this.setState({ error: error });
+        // console.log("MovieDetailsPage fetchMovies ~ ERROR: ", error);
+        setError(error);
       })
       .finally(() => {
         console.log("MovieDetailsPage fetchMovies ~ FINALY: ");
       });
   };
 
-  render() {
-    const { url, path, params } = this.props.match;
-    const { movie, error } = this.state;
-    const movieDate = new Date(movie.release_date);
-    const movieYear = movieDate.getFullYear();
+  const onGoBack = () => {
+    console.log("onGoBack ~ from: ", from);
+    history.push(from);
+    history.push({ type: "go_back" });
+  };
 
-    // console.log("1 MovieDetailsPage ~ render ~ movieId: ", params.movieId);
-    // console.log("1 MovieDetailsPage ~ render ~ genres: ", movie.genres);
-    if (error) {
-      return <Redirect to="/" />;
-    } else {
-      return (
-        <>
-          <Link to="/">
-            <button className={styles.go_back_btn} type="button">
-              <span className={styles.go_back_btn_larr}>&larr;</span> Go back
-            </button>
-          </Link>
+  const movieDate = new Date(movie.release_date);
+  const movieYear = movieDate.getFullYear();
 
-          <div className={styles.view_detail_box}>
-            <div className={styles.view_detail_info}>
-              <img
-                className={styles.big_poster}
-                src={getFullUrl(movie.poster_path)}
-                alt={movie.title}
-              />
+  // console.log("1 MovieDetailsPage ~ render ~ movieId: ", params.movieId);
+  // console.log("1 MovieDetailsPage ~ render ~ genres: ", movie.genres);
+  console.log("1 MovieDetailsPage ~ render ~ history: ", history);
 
-              <div>
-                <h3 className={styles.view_detail_title}>
-                  {movie.title} ({movieYear})
-                </h3>
+  if (error) {
+    return <Redirect to="/" />;
+  } else {
+    return (
+      <>
+        <button className={styles.go_back_btn} type="button" onClick={onGoBack}>
+          <span className={styles.go_back_btn_larr}>&larr;</span> Go back
+        </button>
 
-                <p className={styles.view_detail_score}>
-                  User Score: {movie.vote_average * 10}
-                </p>
+        <div className={styles.view_detail_box}>
+          <div className={styles.view_detail_info}>
+            <img
+              className={styles.big_poster}
+              src={getFullUrl(movie.poster_path)}
+              alt={movie.title}
+            />
 
-                <h3>Overview</h3>
-                <p>{movie.overview}</p>
-
-                <h3>Genres</h3>
-                {movie.genres && (
-                  <ul className={styles.view_detail_genres}>
-                    {movie.genres.map((genre) => {
-                      return (
-                        <li className={styles.view_detail_genre_item}>
-                          {genre.name}
-                        </li>
-                      );
-                    })}
-                  </ul>
-                )}
-              </div>
-            </div>
-
-            <div className={styles.view_detail_add_block}>
-              <h3 className={styles.view_detail_add_title}>
-                Additional information
+            <div>
+              <h3 className={styles.view_detail_title}>
+                {movie.title} ({movieYear})
               </h3>
-              <NavLink
-                to={`${url}/cast`}
-                className={styles.view_detail_add_link}
-              >
-                Cast
-              </NavLink>
-              <NavLink
-                to={`${url}/reviews`}
-                className={styles.view_detail_add_link}
-              >
-                Reviews
-              </NavLink>
-            </div>
 
-            <Switch>
-              <Route
-                exact
-                path={`${path}/cast`}
-                render={() => {
-                  return error ? (
-                    <Redirect to="/" />
-                  ) : (
-                    <Cast movieId={params.movieId} />
-                  );
-                }}
-              />
-              <Route
-                exact
-                path={`${path}/reviews`}
-                render={() => {
-                  return error ? (
-                    <Redirect to="/" />
-                  ) : (
-                    <Reviews movieId={params.movieId} />
-                  );
-                }}
-              />
-            </Switch>
+              <p className={styles.view_detail_score}>
+                User Score: {movie.vote_average * 10}
+              </p>
+
+              <h3>Overview</h3>
+              <p>{movie.overview}</p>
+
+              <h3>Genres</h3>
+              {movie.genres && (
+                <ul className={styles.view_detail_genres}>
+                  {movie.genres.map((genre) => {
+                    return (
+                      <li className={styles.view_detail_genre_item}>
+                        {genre.name}
+                      </li>
+                    );
+                  })}
+                </ul>
+              )}
+            </div>
           </div>
-        </>
-      );
-    }
+
+          <div className={styles.view_detail_add_block}>
+            <h3 className={styles.view_detail_add_title}>
+              Additional information
+            </h3>
+            <NavLink to={`${url}/cast`} className={styles.view_detail_add_link}>
+              Cast
+            </NavLink>
+            <NavLink
+              to={`${url}/reviews`}
+              className={styles.view_detail_add_link}
+            >
+              Reviews
+            </NavLink>
+          </div>
+
+          <Switch>
+            <Route
+              exact
+              path={`${path}/cast`}
+              render={() => {
+                return error ? <Redirect to="/" /> : <Cast movieId={movieId} />;
+              }}
+            />
+            <Route
+              exact
+              path={`${path}/reviews`}
+              render={() => {
+                return error ? (
+                  <Redirect to="/" />
+                ) : (
+                  <Reviews movieId={movieId} />
+                );
+              }}
+            />
+          </Switch>
+        </div>
+      </>
+    );
   }
 }

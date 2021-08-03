@@ -1,7 +1,7 @@
 import React, { PureComponent } from "react";
 import { Redirect } from "react-router-dom";
 
-import settings from "../services/settings";
+import { API_DATA } from "../services/settings";
 import MoviesApi from "../services/movieApi";
 import { getFullUrl } from "../services/functions";
 import styles from "./Views.module.css";
@@ -20,7 +20,9 @@ export default class Cast extends PureComponent {
 
   fetchCastMovies = () => {
     const movieId = this.props.movieId;
-    const apiQuery = `${settings.DATA_QUERY.getMovieId}/${movieId}/credits`;
+    const apiQuery = `${API_DATA.DATA_QUERY.getMovieId}/${movieId}/credits`;
+
+    console.log("Cast ~ movieId: ", movieId);
 
     MoviesApi.fetchMovies(apiQuery)
       .then((data) => {

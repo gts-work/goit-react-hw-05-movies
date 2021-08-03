@@ -1,15 +1,13 @@
 import React, { PureComponent } from "react";
-import { Link } from "react-router-dom";
 
 import MoviesApi from "../services/movieApi";
-import settings from "../services/settings";
 import styles from "./Views.module.css";
-import { getFullUrl } from "../services/functions";
 import MoviesList from "../components/MoviesList";
 
 class HomeView extends PureComponent {
   state = {
     movies: [],
+    links: {},
   };
 
   componentDidMount() {
@@ -21,7 +19,7 @@ class HomeView extends PureComponent {
     MoviesApi.fetchMovies()
       .then((data) => {
         // console.log("API fetchMovies ~ data: ", data);
-        console.log("API fetchMovies ~ results: ", data.results);
+        // console.log("API fetchMovies ~ results: ", data.results);
 
         this.setState({ movies: data.results });
       })
@@ -30,7 +28,7 @@ class HomeView extends PureComponent {
   };
 
   render() {
-    const { url } = this.props.match;
+    // const { url } = this.props.match;
     const { movies } = this.state;
     // console.log("HomeView ~ render ~ url: ", url);
     // console.log("HomeView ~ render ~ movies: ", movies);
@@ -38,7 +36,7 @@ class HomeView extends PureComponent {
     return (
       <>
         <h1 className={styles.title}>Trending today</h1>
-        {movies.length > 0 && <MoviesList movies={movies} url={url} />}
+        {movies.length > 0 && <MoviesList movies={movies} />}
       </>
     );
   }

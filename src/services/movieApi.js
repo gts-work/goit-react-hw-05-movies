@@ -1,14 +1,14 @@
 import axios from "axios";
-import settings from "./settings";
+import { API_DATA } from "./settings";
 
 const instance = axios.create();
-instance.defaults.baseURL = settings.BASE_URL;
+instance.defaults.baseURL = API_DATA.BASE_URL;
 
 async function fetchMovies(
-  queryType = settings.DATA_QUERY.getTrending,
+  queryType = API_DATA.DATA_QUERY.getTrending,
   addQuery = ""
 ) {
-  const query = `${queryType}?api_key=${settings.API_KEY}&${addQuery}`;
+  const query = `${queryType}?api_key=${API_DATA.API_KEY}&${addQuery}`;
 
   // console.log("fetchImages ~ searchQuery: ", searchQuery);
   // console.log("fetchImages ~ currentPage: ", currentPage);

@@ -1,7 +1,7 @@
 import React, { PureComponent } from "react";
 import { Redirect } from "react-router-dom";
 
-import settings from "../services/settings";
+import { API_DATA } from "../services/settings";
 import MoviesApi from "../services/movieApi";
 import styles from "./Views.module.css";
 
@@ -18,7 +18,7 @@ export default class Reviews extends PureComponent {
 
   fetchReviewsMovies = () => {
     const movieId = this.props.movieId;
-    const apiQuery = `${settings.DATA_QUERY.getMovieId}/${movieId}/reviews`;
+    const apiQuery = `${API_DATA.DATA_QUERY.getMovieId}/${movieId}/reviews`;
 
     MoviesApi.fetchMovies(apiQuery)
       .then((data) => {
