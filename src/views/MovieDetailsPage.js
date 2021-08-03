@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, Suspense, lazy } from "react";
+
 import {
   Route,
   NavLink,
@@ -9,12 +10,17 @@ import {
   useHistory,
 } from "react-router-dom";
 
-import Reviews from "./Reviews";
-import Cast from "./Cast";
+import Loader from "../components/Loader";
 import MoviesApi from "../services/movieApi";
 import { API_DATA } from "../services/settings";
 import styles from "./Views.module.css";
 import { getFullUrl } from "../services/functions";
+
+const Reviews = lazy(() =>
+  import("./Reviews" /* webpackChunkName: "reviews" */)
+);
+
+const Cast = lazy(() => import("./Cast" /* webpackChunkName: "cast" */));
 
 export default function MovieDetailsPage(props) {
   const [movie, setMovie] = useState({});
@@ -120,26 +126,32 @@ export default function MovieDetailsPage(props) {
             </NavLink>
           </div>
 
-          <Switch>
-            <Route
-              exact
-              path={`${path}/cast`}
-              render={() => {
-                return error ? <Redirect to="/" /> : <Cast movieId={movieId} />;
-              }}
-            />
-            <Route
-              exact
-              path={`${path}/reviews`}
-              render={() => {
-                return error ? (
-                  <Redirect to="/" />
-                ) : (
-                  <Reviews movieId={movieId} />
-                );
-              }}
-            />
-          </Switch>
+          <Suspense fallback={<Loader />}>
+            <Switch>
+              <Route
+                exact
+                path={`${path}/cast`}
+                render={() => {
+                  return error ? (
+                    <Redirect to="/" />
+                  ) : (
+                    <Cast movieId={movieId} />
+                  );
+                }}
+              />
+              <Route
+                exact
+                path={`${path}/reviews`}
+                render={() => {
+                  return error ? (
+                    <Redirect to="/" />
+                  ) : (
+                    <Reviews movieId={movieId} />
+                  );
+                }}
+              />
+            </Switch>
+          </Suspense>
         </div>
       </>
     );

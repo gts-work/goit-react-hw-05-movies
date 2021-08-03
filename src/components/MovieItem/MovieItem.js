@@ -25,11 +25,6 @@ export default function MovieItem({ id, title, poster_path }) {
     return;
   };
 
-  // console.log("MovieItem ~ url: ", url);
-  // console.log("MovieItem ~ history: ", history);
-  // console.log("MovieItem ~ location: ", location);
-  // console.log("MovieItem ~ routematch: ", routematch.url);
-
   return (
     <li key={id} className={styles.movie_item_block}>
       <Link
