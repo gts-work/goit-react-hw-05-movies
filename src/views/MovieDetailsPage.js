@@ -16,17 +16,6 @@ import { API_DATA } from "../services/settings";
 import styles from "./Views.module.css";
 import { getFullUrl } from "../services/functions";
 
-// export default function MovieDetailsPage() {
-//     const location = useLocation();
-//     console.log("MovieDetailsPage ~ render ~ location:", location);
-
-//     const { movieId } = useParams();
-//     console.log("MovieDetailsPage ~ movieId: ", movieId);
-
-//     const history = useHistory();
-//     console.log("MovieDetailsPage ~ history: ", history);
-// }
-
 export default function MovieDetailsPage(props) {
   const [movie, setMovie] = useState({});
   const [error, setError] = useState("");
@@ -35,12 +24,6 @@ export default function MovieDetailsPage(props) {
   const history = useHistory();
   const { path, url } = props.match;
   const [from, setFrom] = useState(location?.state?.from ?? "/");
-
-  // console.log("MovieDetailsPage ~ props.url: ", url);
-  // console.log("MovieDetailsPage ~ props.path: ", path);
-  // console.log("MovieDetailsPage movieId: ", movieId);
-  console.log("MovieDetailsPage location:", location);
-  // console.log("MovieDetailsPage history:", history);
 
   useEffect(() => {
     fetchGetMovieId();
@@ -77,10 +60,6 @@ export default function MovieDetailsPage(props) {
 
   const movieDate = new Date(movie.release_date);
   const movieYear = movieDate.getFullYear();
-
-  // console.log("1 MovieDetailsPage ~ render ~ movieId: ", params.movieId);
-  // console.log("1 MovieDetailsPage ~ render ~ genres: ", movie.genres);
-  console.log("1 MovieDetailsPage ~ render ~ history: ", history);
 
   if (error) {
     return <Redirect to="/" />;

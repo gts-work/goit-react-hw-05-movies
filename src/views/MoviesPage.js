@@ -1,23 +1,10 @@
 import React, { useState, useEffect } from "react";
-import {
-  Route,
-  NavLink,
-  Link,
-  Switch,
-  Redirect,
-  useLocation,
-  useParams,
-  useHistory,
-} from "react-router-dom";
+import { useLocation, useHistory } from "react-router-dom";
 
 import { API_DATA } from "../services/settings";
 import MoviesApi from "../services/movieApi";
 import styles from "./Views.module.css";
 import MoviesList from "../components/MoviesList";
-
-// import MovieDetailsPage from "./MovieDetailsPage";
-// import Cast from "./Cast";
-// import Reviews from "./Reviews";
 
 export default function Movies(props) {
   const [query, setQuery] = useState("");
@@ -49,8 +36,6 @@ export default function Movies(props) {
         localStorage.setItem("query", "");
       }
     }
-
-    // localStorage.getItem("query");
   }, [query]);
 
   const handleChange = (e) => {
