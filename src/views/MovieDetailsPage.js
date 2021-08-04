@@ -61,7 +61,7 @@ export default function MovieDetailsPage(props) {
   const onGoBack = () => {
     console.log("onGoBack ~ from: ", from);
     history.push(from);
-    history.push({ type: "go_back" });
+    // history.push({ type: "go_back" });
   };
 
   const movieDate = new Date(movie.release_date);

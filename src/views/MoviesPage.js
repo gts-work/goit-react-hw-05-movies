@@ -14,30 +14,6 @@ export default function Movies(props) {
   const history = useHistory();
   const { path } = props.match;
 
-  console.log("Movies ~ location", location);
-  console.log("Movies ~ history", history);
-  console.log("Movies ~ props", props);
-
-  // localStorage. getItem ( 'user' )
-  useEffect(() => {
-    console.log("useEffect ~ useEffect: ");
-
-    const queryType = location?.type ?? "";
-
-    if (queryType ? localStorage.getItem("query") : "") {
-      console.log("useEffect ~ localStorage: ", localStorage.getItem("query"));
-      console.log("useEffect ~ query", query);
-
-      setQuery(queryType ? localStorage.getItem("query") : "");
-
-      if (query) {
-        fetchSearchMovies();
-        setQuery("");
-        localStorage.setItem("query", "");
-      }
-    }
-  }, [query]);
-
   const handleChange = (e) => {
     // console.log("handleChange Movies ~ e: ", e.currentTarget.value);
     setQuery(e.currentTarget.value);
@@ -61,11 +37,11 @@ export default function Movies(props) {
         console.log("Movies fetchMovies ~ data: ", data.results);
 
         setMovies(data.results);
-        localStorage.setItem("query", query);
+        // localStorage.setItem("query", query);
       })
       .catch((error) => {
         console.log("Movies fetchMovies ~ ERROR: ", error);
-        localStorage.setItem("query", "");
+        // localStorage.setItem("query", "");
       })
       .finally(() => {
         console.log("Movies fetchMovies ~ FINALY: ");
